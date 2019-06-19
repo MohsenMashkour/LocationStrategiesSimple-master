@@ -25,21 +25,13 @@ import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.Calendar;
 import java.util.Locale;
 
 
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, LocationListener {
-
-	private GoogleMap mMap;
-
+public class MainActivity extends AppCompatActivity implements LocationListener {
 	String LOG_TAG = getClass().getSimpleName();
 	private int MY_PERMISSION_REQUEST_ACCESS = 101;
 	private final String FUSED_PROVIDER = "fused";
@@ -252,19 +244,5 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
 	@Override
 	public void onProviderDisabled(String provider) {
 		Log.i(LOG_TAG, currentLocationProvider + getResources().getString(R.string.disabled_msg));
-	}
-
-	@Override
-	public void onMapReady(GoogleMap googleMap) {
-
-		mMap = googleMap;
-
-		// Add a marker in Sydney and move the camera
-		LatLng sydney = new LatLng(-34, 151);
-		mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-		mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
-		mMap.getUiSettings().setZoomControlsEnabled(true);
-		mMap.moveCamera(CameraUpdateFactory.zoomTo(12));
-
 	}
 }
