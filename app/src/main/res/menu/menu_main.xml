@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.mr.locationstrategiessimple.MainActivity">
+    <item
+        android:id="@+id/menu_gps"
+        android:orderInCategory="100"
+        android:title="@string/menu_gps"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_cellular"
+        android:orderInCategory="101"
+        android:title="@string/menu_cellular"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/menu_fused"
+        android:orderInCategory="102"
+        android:title="@string/menu_fused"
+        app:showAsAction="never" />
+</menu>
