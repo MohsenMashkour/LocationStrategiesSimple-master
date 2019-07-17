@@ -2,16 +2,26 @@ package com.mr.locationstrategiessimple;
 
 class DataBase {
 
-    Double id;
-    Double latitude;
-    Double longitude;
-    Double accuracy;
+    public Double id;
+    public Double latitude;
+    public Double longitude;
+    public Double accuracy;
 
-    String time;
-    String memo;
-    String cdma;
-    String gsm;
-    String lte;
+    public String time;
+    public String memo;
+
+    public int cdmaDbm;
+    public int gsm;
+    public int lte;
+
+    public int lteSignalStrength;
+    public int lteCqi;
+    public int lteRssnr;
+    public int lteRsrp;
+    public int gsmBitErrorRate;
+    public int cdmaEcIo;
+    public int gsmSignalStrength;
+
 
     public DataBase() {
 
@@ -21,16 +31,27 @@ class DataBase {
 
     }
 
-    public DataBase(Double id, String time, Double latitude, Double longitude, Double accuracy, String memo, String cdma, String gsm, String lte) {
+
+
+    public DataBase(Double id, String time, Double latitude, Double longitude, Double accuracy, String memo, int cdmaDbm, int gsm, int lte, int lteSignalStrength,
+                    int gsmSignalStrength, int lteCqi, int lteRssnr, int lteRsrp, int gsmBitErrorRate, int cdmaEcIo) {
         this.id = id;
         this.time = time;
         this.latitude = latitude;
         this.longitude = longitude;
         this.accuracy = accuracy;
         this.memo = memo;
-        this.cdma = cdma;
+        this.cdmaDbm = cdmaDbm;
         this.gsm = gsm;
         this.lte = lte;
+
+        this.lteSignalStrength = lteSignalStrength;
+        this.gsmSignalStrength = gsmSignalStrength;
+        this.lteCqi = lteCqi;
+        this.lteRssnr = lteRssnr;
+        this.lteRsrp = lteRsrp;
+        this.gsmBitErrorRate = gsmBitErrorRate;
+        this.cdmaEcIo = cdmaEcIo;
     }
 
     public void setId(Double id) {
@@ -57,15 +78,39 @@ class DataBase {
         this.memo = memo;
     }
 
-    public void setCdma(String cdma) {
-        this.cdma = cdma;
+    public void setCdmaDbm(int cdmaDbm) {
+        this.cdmaDbm = cdmaDbm;
     }
 
-    public void setGsm(String gsm) {
+    public void setGsm(int gsm) {
         this.gsm = gsm;
     }
 
-    public void setLte(String lte) {
+    public void setLte(int lte) {
         this.lte = lte;
     }
+
+    public void setLteSignalStrength(int lteSignalStrength) { this.lteSignalStrength = lteSignalStrength; }
+
+    public void setLteCqi(int lteCqi) {
+        this.lteCqi = lteCqi;
+    }
+
+    public void setLteRssnr(int lteRssnr) {
+        this.lteRssnr = lteRssnr;
+    }
+
+    public void setLteRsrp(int lteRsrp) {
+        this.lteRsrp = lteRsrp;
+    }
+
+    public void setGsmBitErrorRate(int gsmBitErrorRate) {
+        this.gsmBitErrorRate = gsmBitErrorRate;
+    }
+
+    public void setCdmaEcIo(int cdmaEcIo) {
+        this.cdmaEcIo = cdmaEcIo;
+    }
+
+    public void setGsmSignalStrength(int gsmSignalStrength) { this.gsmSignalStrength = gsmSignalStrength;  }
 }

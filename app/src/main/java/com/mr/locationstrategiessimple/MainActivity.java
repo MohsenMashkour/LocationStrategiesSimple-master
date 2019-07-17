@@ -78,9 +78,17 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 	private boolean receivingLocationUpdates = false;
 	private FusedLocationProviderClient fusedLocationClient;
 	private LocationCallback locationCallback;
+	private int lteSignalStrength = -1;
+	private int gsmSignalStrength = -1;
+	private int cdmaDbm = -1;
+    private int lteCqi = -1;
+    private int lteRssnr = -1;
+    private int lteRsrp = -1;
+    private int gsmBitErrorRate = -1;
+    private int cdmaEcIo = -1;
 
 
-	@Override
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
@@ -270,7 +278,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 						dataBase.setLatitude(location.getLatitude());
 						dataBase.setLongitude(location.getLongitude());
 						dataBase.setAccuracy((double) location.getAccuracy());
-						//dataBase.setCdma(signalStrengthTextView.getText().toString().trim());
+                        dataBase.setCdmaDbm(cdmaDbm);
+                        dataBase.setLteSignalStrength(lteSignalStrength);
+                        dataBase.setGsmSignalStrength(gsmSignalStrength);
+                        dataBase.setLteCqi(lteCqi);
+                        dataBase.setLteRssnr(lteRssnr);
+                        dataBase.setLteRsrp(lteRsrp);
+                        dataBase.setGsmBitErrorRate(gsmBitErrorRate);
+                        dataBase.setCdmaEcIo(cdmaEcIo);
+
 
 
 						databaseReference.child("Fused").child(editTextMemo.getText().toString()).child(String.format(String.valueOf(System.currentTimeMillis())))
@@ -301,7 +317,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 		dataBase.setLatitude(location.getLatitude());
 		dataBase.setLongitude(location.getLongitude());
 		dataBase.setAccuracy((double) location.getAccuracy());
-		//dataBase.setCdma(signalStrengthTextView.getText().toString().trim());
+		dataBase.setCdmaDbm(cdmaDbm);
+		dataBase.setLteSignalStrength(lteSignalStrength);
+		dataBase.setGsmSignalStrength(gsmSignalStrength);
+		dataBase.setLteCqi(lteCqi);
+		dataBase.setLteRssnr(lteRssnr);
+        dataBase.setLteRsrp(lteRsrp);
+        dataBase.setGsmBitErrorRate(gsmBitErrorRate);
+        dataBase.setCdmaEcIo(cdmaEcIo);
 
 		if (currentLocationProvider.equals(LocationManager.NETWORK_PROVIDER)){
 
@@ -396,10 +419,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 		Locale currentLocale = Locale.getDefault();
 
 
-		int lteSignalStrength = getLTEparameters(signalStrength,"getLteSignalStrength"); // get signal strength
-		int lteCqi = getLTEparameters(signalStrength,"getLteCqi"); // get Channel Quality Indicator value
-		int lteRsrp = getLTEparameters(signalStrength,"getLteRsrp"); // Get Reference signal received power value
-		int lteRssnr = getLTEparameters(signalStrength,"getLteRssnr"); // Get Reference signal Signal to Noise ratio
+		 lteSignalStrength = getLTEparameters(signalStrength,"getLteSignalStrength"); // get signal strength
+		 lteCqi = getLTEparameters(signalStrength,"getLteCqi"); // get Channel Quality Indicator value
+		 lteRsrp = getLTEparameters(signalStrength,"getLteRsrp"); // Get Reference signal received power value
+		 lteRssnr = getLTEparameters(signalStrength,"getLteRssnr"); // Get Reference signal Signal to Noise ratio
 
 		String infoLte = String.format(currentLocale,"LTE info:\nSignal Strength: %d [dBm] CQI: %d RSRP: %d [dBm] RSSNR: %d\n",
 				lteSignalStrength,
@@ -408,8 +431,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 				lteRssnr);
 
 		// Get GSM related info:
-		int gsmSignalStrength = signalStrength.getGsmSignalStrength(); // get GSM signal strength
-		int gsmBitErrorRate = signalStrength.getGsmBitErrorRate(); // Get GSM BER
+		 gsmSignalStrength = signalStrength.getGsmSignalStrength(); // get GSM signal strength
+		 gsmBitErrorRate = signalStrength.getGsmBitErrorRate(); // Get GSM BER
 
 		// Create a string that holds GSM related information
 		String infoGSM = String.format(currentLocale,"GSM info:\nSignal Strength: %d [dBm] BER: %d\n",
@@ -417,8 +440,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 				gsmBitErrorRate);
 
 		// Get CDMA related info:
-		int cdmaDbm = signalStrength.getCdmaDbm(); // get CDMA signal strength
-		int cdmaEcIo = signalStrength.getCdmaEcio();// get CDMA Ec/Io value (quality indicator)
+		 cdmaDbm = signalStrength.getCdmaDbm(); // get CDMA signal strength
+		 cdmaEcIo = signalStrength.getCdmaEcio();// get CDMA Ec/Io value (quality indicator)
 
 		// Create a string that holds CDMA related information
 		String infoCDMA = String.format(currentLocale,"CDMA info:\nSignal Strength: %d [dBm] Ec/Io: %d\n",
