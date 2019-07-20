@@ -21,6 +21,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -63,6 +65,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 	TextView signalStrengthTextView;
 
 
+
+	NetworkListener networkListener;
+
+
     //LocationTechniques
     String LOG_TAG = getClass().getSimpleName();
 	private int MY_PERMISSION_REQUEST_ACCESS = 101;
@@ -86,12 +92,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private int lteRsrp = -1;
     private int gsmBitErrorRate = -1;
     private int cdmaEcIo = -1;
+    int sample = 0;
 
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
 		databaseReference = FirebaseDatabase.getInstance().getReference().child("DataBase");
 		dataBase = new DataBase();
@@ -105,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 			return;
 
 		}
-		initTelephonyManager();
+
 
 		Toolbar toolbar = findViewById(R.id.toolbar);
 		setSupportActionBar(toolbar);
@@ -122,10 +131,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 				if (isChecked) {
 					// register listener
 					connectLocationListener();
+					initTelephonyManager();
 				} else {
 					// unregister listener
 					disconnectLocationListener();
 					editTextMemo.setText("");
+					sample = 0;
 				}
 			}
 		});
@@ -147,7 +158,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 	protected void onStop() {
 		super.onStop();
 		disconnectLocationListener();
+		disconnectInitTelephonyManager();
 	}
+
+
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -263,7 +277,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 	private void createLocationCallback() {
 		// create the locationCallback
 		locationCallback = new LocationCallback() {
-			@Override
+			@SuppressLint("SetTextI18n")
+            @Override
 			public void onLocationResult(LocationResult locationResult) {
 				// Code executed when user's location changes
 				if (locationResult != null) {
@@ -272,8 +287,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 					locationInfoTxtV.setText(locationToString(location));
 
 
-						dataBase.setId((double) System.currentTimeMillis());
-						dataBase.setMemo(editTextMemo.getText().toString().trim());
+						//dataBase.setId((double) System.currentTimeMillis());
+						//dataBase.setMemo(editTextMemo.getText().toString().trim());
 						dataBase.setTime(String.valueOf(location.getTime()));
 						dataBase.setLatitude(location.getLatitude());
 						dataBase.setLongitude(location.getLongitude());
@@ -286,6 +301,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                         dataBase.setLteRsrp(lteRsrp);
                         dataBase.setGsmBitErrorRate(gsmBitErrorRate);
                         dataBase.setCdmaEcIo(cdmaEcIo);
+
+					sample ++;
+
+					signalStrengthTextView.setText("No. of samples: " +sample);
 
 
 
@@ -306,13 +325,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 			fusedLocationClient.removeLocationUpdates(locationCallback);
 	}
 
-	@Override
+	@SuppressLint("SetTextI18n")
+    @Override
 	public void onLocationChanged(Location location) {
 		String info = locationToString(location);
 		locationInfoTxtV.setText(info);
 
-		dataBase.setId((double) System.currentTimeMillis());
-		dataBase.setMemo(editTextMemo.getText().toString().trim());
+		//dataBase.setId((double) System.currentTimeMillis());
+		//dataBase.setMemo(editTextMemo.getText().toString().trim());
 		dataBase.setTime(String.valueOf(location.getTime()));
 		dataBase.setLatitude(location.getLatitude());
 		dataBase.setLongitude(location.getLongitude());
@@ -325,6 +345,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         dataBase.setLteRsrp(lteRsrp);
         dataBase.setGsmBitErrorRate(gsmBitErrorRate);
         dataBase.setCdmaEcIo(cdmaEcIo);
+
+        sample ++;
+
+        signalStrengthTextView.setText("No. of samples: " +sample);
 
 		if (currentLocationProvider.equals(LocationManager.NETWORK_PROVIDER)){
 
@@ -402,13 +426,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
 	private void initTelephonyManager() {
 		telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-		NetworkListener networkListener = NetworkListener.getInstance(this);
+		networkListener = NetworkListener.getInstance(this);
 		networkListener.addListener(this);
 
 		telephonyManager.listen(networkListener,
 				PhoneStateListener.LISTEN_CELL_INFO | PhoneStateListener.LISTEN_SIGNAL_STRENGTHS);
 	}
 
+
+	private void disconnectInitTelephonyManager() {
+		//telephonyManager.removeUpdates();
+		networkListener.removeListener(this);
+	}
 
 
 
@@ -449,7 +478,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 				cdmaEcIo);
 
 		//Display all information in the signalStrengthTextView
-		signalStrengthTextView.setText(infoLte + infoGSM + infoCDMA);
+		//signalStrengthTextView.setText(infoLte + infoGSM + infoCDMA);
 	}
 	private int getLTEparameters(SignalStrength signalStrength, String parameterName)
 	{

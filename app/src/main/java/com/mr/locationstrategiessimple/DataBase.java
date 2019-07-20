@@ -11,8 +11,8 @@ class DataBase {
     public String memo;
 
     public int cdmaDbm;
-    public int gsm;
-    public int lte;
+   // public int gsm;
+    //public int lte;
 
     public int lteSignalStrength;
     public int lteCqi;
@@ -33,7 +33,7 @@ class DataBase {
 
 
 
-    public DataBase(Double id, String time, Double latitude, Double longitude, Double accuracy, String memo, int cdmaDbm, int gsm, int lte, int lteSignalStrength,
+    public DataBase(Double id, String time, Double latitude, Double longitude, Double accuracy, String memo, int cdmaDbm, int lteSignalStrength,
                     int gsmSignalStrength, int lteCqi, int lteRssnr, int lteRsrp, int gsmBitErrorRate, int cdmaEcIo) {
         this.id = id;
         this.time = time;
@@ -42,8 +42,8 @@ class DataBase {
         this.accuracy = accuracy;
         this.memo = memo;
         this.cdmaDbm = cdmaDbm;
-        this.gsm = gsm;
-        this.lte = lte;
+       // this.gsm = gsm;
+        //this.lte = lte;
 
         this.lteSignalStrength = lteSignalStrength;
         this.gsmSignalStrength = gsmSignalStrength;
@@ -82,13 +82,9 @@ class DataBase {
         this.cdmaDbm = cdmaDbm;
     }
 
-    public void setGsm(int gsm) {
-        this.gsm = gsm;
-    }
+   // public void setGsm(int gsm) {        this.gsm = gsm;    }
 
-    public void setLte(int lte) {
-        this.lte = lte;
-    }
+   // public void setLte(int lte) { this.lte = lte;    }
 
     public void setLteSignalStrength(int lteSignalStrength) { this.lteSignalStrength = lteSignalStrength; }
 

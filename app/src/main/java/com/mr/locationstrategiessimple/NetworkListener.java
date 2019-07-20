@@ -21,6 +21,7 @@ class NetworkListener extends PhoneStateListener {
     }
     // Method for adding a listener to the updates received by NetworkListener
     public void addListener(NetworkStateChangedListener listener){
+
         this.listener = listener;
     }
 
@@ -31,6 +32,10 @@ class NetworkListener extends PhoneStateListener {
             // If the listener exists send the signalStrength variable to the handler
             listener.signalStrengthsChangedHandler(signalStrength);
         }
+    }
+
+    public void removeListener(Context context) {
+        listener = null;
     }
 
     // Interface used for creating a connection between NetworkListener

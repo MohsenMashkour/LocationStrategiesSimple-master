@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "449421240370",
+    "firebase_url": "https://locationstrategiesdatabase.firebaseio.com",
+    "project_id": "locationstrategiesdatabase",
+    "storage_bucket": "locationstrategiesdatabase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:449421240370:android:bc98b55a37c746d1",
+        "android_client_info": {
+          "package_name": "com.mr.locationstrategiessimple"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "449421240370-cufk284mdqn4con5undg9ms31fefvdnm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mr.locationstrategiessimple",
+            "certificate_hash": "4783602a42bf0825f0ed4cf4d6bfb386f958ea41"
+          }
+        },
+        {
+          "client_id": "449421240370-38mnm0e1q3sdio10m1gron7vn2lm10sl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDIeuEEYFTHwBsOc47PJnd60FoUYOsUM8Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "449421240370-38mnm0e1q3sdio10m1gron7vn2lm10sl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
